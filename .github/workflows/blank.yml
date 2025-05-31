@@ -18,16 +18,10 @@ jobs:
       - uses: nttld/setup-ndk@v1
         id: setup-ndk
         with:
-          ndk-version: r21e
-          add-to-path: false
-    # Steps represent a sequence of tasks that will be executed as part of the job
+          ndk-version: r28
+          add-to-path: true
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
-
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
+      - name: download libspatialite
         run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+          wget https://www.gaia-gis.it/gaia-sins/libspatialite-sources/libspatialite-5.1.0.tar.gz
+          tar xvzf libspatialite-5.1.0.tar.gz
