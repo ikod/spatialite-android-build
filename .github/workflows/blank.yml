@@ -43,7 +43,7 @@ jobs:
           make install
           
           wget -q https://download.osgeo.org/geos/geos-3.13.1.tar.bz2
-          bzip2 -d < geos-3.13.1.tar.bz2 | tar xzf -
+          bzip2 -d < geos-3.13.1.tar.bz2 | tar xf -
           cd geos-3.13.1
           ./configure --prefix=/tmp/geos-${TARGET}
           make install
