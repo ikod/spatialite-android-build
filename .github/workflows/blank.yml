@@ -37,18 +37,22 @@ jobs:
 
           wget -q https://www.sqlite.org/2025/sqlite-src-3500000.zip
           unzip -q sqlite-src-3500000.zip
-          echo ${PATH}
           cd sqlite-src-3500000
           ./configure --prefix=/tmp/libsqlite3-${TARGET}
           make install
+          cd ..
           
           wget -q https://download.osgeo.org/geos/geos-3.13.1.tar.bz2
           bzip2 -d < geos-3.13.1.tar.bz2 | tar xf -
           cd geos-3.13.1
           ./configure --prefix=/tmp/geos-${TARGET}
           make install
+          cd ..
 
+          export CFLAGS="${CFLAGS} -I/tmp/libsqlite3-${TARGET}/include/"
           wget -q https://www.gaia-gis.it/gaia-sins/libspatialite-sources/libspatialite-5.1.0.tar.gz
           tar xzf libspatialite-5.1.0.tar.gz
           cd libspatialite-5.1.0
           ./configure --prefix=/tmp/libspatialite-${TARGET} --enable-proj=no --enable-freexl=no --enable-minizip=no --enable-module-only --enable-examples=no --host=x86_64 --with-sysroot=${NDK}/toolchains/llvm/prebuilt/linux-x86_64/sysroot --with-geosconfig=/tmp/geos-${TARGET}/bin/geos-config --enable-shared=yes --enable-static=yes
+          
+
