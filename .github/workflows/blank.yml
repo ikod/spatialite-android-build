@@ -3,10 +3,10 @@
 name: CI
 
 # Controls when the workflow will run
-on:
-  push:
-    branches:
-      - main
+on: workflow_dispatch
+  # push:
+  #   branches:
+  #     - main
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
@@ -19,6 +19,11 @@ jobs:
         with:
           ndk-version: r28
           add-to-path: true
+      - name: Cache GEOS
+        uses: actions/cache@v4
+        with:
+          path: /home/runner/cache
+            
       - name: download requirements
         run: |
           export TARGET=x86_64-linux-android
@@ -38,6 +43,7 @@ jobs:
 
           sudo apt install -y autotools-dev autoconf libtool
 
+          echo Build GEOS
           wget -q https://download.osgeo.org/geos/geos-3.13.1.tar.bz2
           bzip2 -d < geos-3.13.1.tar.bz2 | tar xf -
           cd geos-3.13.1
@@ -45,6 +51,7 @@ jobs:
           make install
           cd ..
 
+          echo Build LIBTROPO
           wget -q https://github.com/CGX-GROUP/librttopo/archive/refs/tags/librttopo-1.1.0.tar.gz
           tar xzf librttopo-1.1.0.tar.gz
           cd librttopo-librttopo-1.1.0
@@ -53,14 +60,16 @@ jobs:
           make install
           cd ..          
           
+          echo Build LIBSQLITE3
           wget -q https://www.sqlite.org/2025/sqlite-src-3500000.zip
           unzip -q sqlite-src-3500000.zip
           cd sqlite-src-3500000
           ./configure --prefix=${BUILD}
           make install
           cd ..
-          
-          
+
+          ls -lR ${BUILD}
+          echo Build LIBSPATIALITE
           wget -q https://www.gaia-gis.it/gaia-sins/libspatialite-sources/libspatialite-5.1.0.tar.gz
           tar xzf libspatialite-5.1.0.tar.gz
           cd libspatialite-5.1.0
