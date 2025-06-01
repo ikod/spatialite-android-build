@@ -22,7 +22,7 @@ jobs:
       - name: download requirements
         run: |
           export TARGET=x86_64-linux-android
-          export BUILD="~/build-${TARGET}"
+          export BUILD="/home/runner/build-${TARGET}"
           export NDK=/opt/hostedtoolcache/ndk/r28/x64
           export TOOLCHAIN=${NDK}/toolchains/llvm/prebuilt/linux-x86_64
           export API=28
