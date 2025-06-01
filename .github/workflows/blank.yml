@@ -40,8 +40,8 @@ jobs:
           export RANLIB=$TOOLCHAIN/bin/llvm-ranlib
           export STRIP=$TOOLCHAIN/bin/llvm-strip
 
-          export CFLAGS="${CFLAGS} -I${BUILD}/include/ -L${BUILD}/lib"
-
+          export CFLAGS="${CFLAGS} -I${BUILD}/include/"
+          export LDFLAGS="${LDFLAGS} -L${BUILD}/lib/"
           sudo apt install -y autotools-dev autoconf libtool
 
           echo Build GEOS
