@@ -14,16 +14,15 @@ jobs:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
       - uses: nttld/setup-ndk@v1
         id: setup-ndk
         with:
           ndk-version: r28
           add-to-path: true
-
       - name: download requirements
         run: |
           export TARGET=x86_64-linux-android
+          export BUILD="~/build-${TARGET}"
           export NDK=/opt/hostedtoolcache/ndk/r28/x64
           export TOOLCHAIN=${NDK}/toolchains/llvm/prebuilt/linux-x86_64
           export API=28
@@ -39,7 +38,7 @@ jobs:
           wget -q https://download.osgeo.org/geos/geos-3.13.1.tar.bz2
           bzip2 -d < geos-3.13.1.tar.bz2 | tar xf -
           cd geos-3.13.1
-          ./configure --prefix=/tmp/geos-${TARGET}
+          ./configure --prefix=${BUILD}
           make install
           cd ..
 
@@ -47,14 +46,14 @@ jobs:
           tar xzf librttopo-1.1.0.tar.gz
           cd librttopo-librttopo-1.1.0
           ./autogen.sh
-          ./configure --host=x86_64 --with-geosconfig=/tmp/geos-${TARGET}/bin/geos-config --prefix=/tmp/librttopo-${TARGET}
+          ./configure --host=x86_64 --with-geosconfig=${BUILD}/bin/geos-config --prefix=${BUILD}
           make install
           cd ..          
           
           wget -q https://www.sqlite.org/2025/sqlite-src-3500000.zip
           unzip -q sqlite-src-3500000.zip
           cd sqlite-src-3500000
-          ./configure --prefix=/tmp/libsqlite3-${TARGET}
+          ./configure --prefix=${BUILD}
           make install
           cd ..
           
@@ -63,6 +62,6 @@ jobs:
           wget -q https://www.gaia-gis.it/gaia-sins/libspatialite-sources/libspatialite-5.1.0.tar.gz
           tar xzf libspatialite-5.1.0.tar.gz
           cd libspatialite-5.1.0
-          ./configure --prefix=/tmp/libspatialite-${TARGET} --enable-proj=no --enable-freexl=no --enable-minizip=no --enable-module-only --enable-examples=no --host=x86_64 --with-sysroot=${NDK}/toolchains/llvm/prebuilt/linux-x86_64/sysroot --with-geosconfig=/tmp/geos-${TARGET}/bin/geos-config --enable-shared=yes --enable-static=yes
+          ./configure --prefix=${BUILD} --enable-proj=no --enable-freexl=no --enable-minizip=no --enable-module-only --enable-examples=no --host=x86_64 --with-sysroot=${NDK}/toolchains/llvm/prebuilt/linux-x86_64/sysroot --with-geosconfig=${BUILD}/bin/geos-config --enable-shared=yes --enable-static=yes
           
 
