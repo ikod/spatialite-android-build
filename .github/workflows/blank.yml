@@ -34,14 +34,8 @@ jobs:
           export LD=$TOOLCHAIN/bin/ld
           export RANLIB=$TOOLCHAIN/bin/llvm-ranlib
           export STRIP=$TOOLCHAIN/bin/llvm-strip
+          sudo apt install -y autotools-dev autoconf libtool
 
-          wget -q https://www.sqlite.org/2025/sqlite-src-3500000.zip
-          unzip -q sqlite-src-3500000.zip
-          cd sqlite-src-3500000
-          ./configure --prefix=/tmp/libsqlite3-${TARGET}
-          make install
-          cd ..
-          
           wget -q https://download.osgeo.org/geos/geos-3.13.1.tar.bz2
           bzip2 -d < geos-3.13.1.tar.bz2 | tar xf -
           cd geos-3.13.1
@@ -49,6 +43,22 @@ jobs:
           make install
           cd ..
 
+          wget -q https://github.com/CGX-GROUP/librttopo/archive/refs/tags/librttopo-1.1.0.tar.gz
+          tar xzf librttopo-1.1.0.tar.gz
+          cd librttopo-librttopo-1.1.0
+          ./autogen.sh
+          ./configure --with-geosconfig=/tmp/geos-${TARGET}/bin/geos-config --prefix=/tmp/librttopo-${TARGET}
+          make install
+          cd ..          
+          
+          wget -q https://www.sqlite.org/2025/sqlite-src-3500000.zip
+          unzip -q sqlite-src-3500000.zip
+          cd sqlite-src-3500000
+          ./configure --prefix=/tmp/libsqlite3-${TARGET}
+          make install
+          cd ..
+          
+          
           export CFLAGS="${CFLAGS} -I/tmp/libsqlite3-${TARGET}/include/"
           wget -q https://www.gaia-gis.it/gaia-sins/libspatialite-sources/libspatialite-5.1.0.tar.gz
           tar xzf libspatialite-5.1.0.tar.gz
