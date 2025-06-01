@@ -34,7 +34,7 @@ jobs:
           export RANLIB=$TOOLCHAIN/bin/llvm-ranlib
           export STRIP=$TOOLCHAIN/bin/llvm-strip
 
-          export CFLAGS="${CFLAGS} -I${TARGET}/include/"
+          export CFLAGS="${CFLAGS} -I${BUILD}/include/"
 
           sudo apt install -y autotools-dev autoconf libtool
 
