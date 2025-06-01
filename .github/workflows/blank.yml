@@ -44,20 +44,28 @@ jobs:
           export LDFLAGS="${LDFLAGS} -L${BUILD}/lib/ -lm"
           sudo apt install -y autotools-dev autoconf libtool
 
-          echo Build ICU
+          echo == BUILD ICU ==
           wget -q https://github.com/unicode-org/icu/releases/download/release-77-1/icu4c-77_1-src.tgz
           tar xzf icu4c-77_1-src.tgz
           cd icu
           cd ..
           
-          echo BUILD LIBICONV
+          echo == BUILD LIBICONV ==
           wget -q https://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.18.tar.gz
           tar xzf libiconv-1.18.tar.gz
           cd libiconv-1.18
           ./configure --host=x86_64 --prefix=${BUILD} --with-sysroot=${NDK}/toolchains/llvm/prebuilt/linux-x86_64/sysroot
           make install
+          cd ..
 
-          echo Build GEOS
+          echo == BUILD LIBXML2 ==
+          wget -q https://gitlab.gnome.org/GNOME/libxml2/-/archive/v2.14.3/libxml2-v2.14.3.tar.gz
+          tar xzf libxml2-v2.14.3.tar.gz
+          cd libxml2-v2.14.3
+          ./configure --host=x86_64 --prefix=${BUILD} --without-python --with-sysroot=${NDK}/toolchains/llvm/prebuilt/linux-x86_64/sysroot
+          cd ..
+
+          echo == Build GEOS ==
           wget -q https://download.osgeo.org/geos/geos-3.13.1.tar.bz2
           bzip2 -d < geos-3.13.1.tar.bz2 | tar xf -
           cd geos-3.13.1
@@ -82,8 +90,6 @@ jobs:
           make install
           cd ..
 
-          wget -q https://gitlab.gnome.org/GNOME/libxml2/-/archive/v2.14.3/libxml2-v2.14.3.tar.gz
-          tar xzf libxml2-v2.14.3.tar.gz
 
           
           ls -lR ${BUILD}
