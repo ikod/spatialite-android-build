@@ -23,7 +23,8 @@ jobs:
         uses: actions/cache@v4
         with:
           path: /home/runner/cache
-            
+          key: geos-3.13.1
+
       - name: download requirements
         run: |
           export TARGET=x86_64-linux-android
