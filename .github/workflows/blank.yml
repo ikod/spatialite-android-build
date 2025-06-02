@@ -4,6 +4,12 @@ name: spatialite android build
 
 # Controls when the workflow will run
 on: workflow_dispatch
+  inputs:
+    name: target
+    type: choice
+    options:
+    - x86_64-linux-android
+    - arm64-v8a
   # push:
   #   branches:
   #     - main
@@ -24,7 +30,7 @@ jobs:
 
       - name: build
         run: |
-          export TARGET=x86_64-linux-android
+          export TARGET=${{ github.event.inputs.target }}
           export BUILD="/home/runner/build-${TARGET}"
           export NDK=/opt/hostedtoolcache/ndk/r28/x64
           export TOOLCHAIN=${NDK}/toolchains/llvm/prebuilt/linux-x86_64
@@ -97,9 +103,10 @@ jobs:
           cd libspatialite-5.1.0
           ./configure --prefix=${BUILD} --enable-proj=no --enable-freexl=no --enable-minizip=no --enable-module-only --enable-examples=no --host=x86_64 --with-geosconfig=${BUILD}/bin/geos-config --with-sysroot=${NDK}/toolchains/llvm/prebuilt/linux-x86_64/sysroot 
           make install
+          ls ${BUILD}/libs
 
       - name: publish
         uses: actions/upload-artifact@v4
         with:
-          path: /home/runner/build-x86_64-linux-android
+          path: /home/runner/build-x86_64-linux-android/libs/*lib_spatialite*
           name: libs
