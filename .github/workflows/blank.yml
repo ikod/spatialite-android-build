@@ -48,6 +48,15 @@ jobs:
           export LDFLAGS="${LDFLAGS} -L${BUILD}/lib/ -lm"
           sudo apt install -y autotools-dev autoconf libtool
 
+          echo Build LIBSQLITE3
+          wget -q https://www.sqlite.org/2025/sqlite-src-3500000.zip
+          unzip -q sqlite-src-3500000.zip
+          cd sqlite-src-3500000
+          ./configure --prefix=${BUILD}
+          make install
+          cd ..
+
+
           wget -q  https://download.osgeo.org/libtiff/tiff-4.7.0.zip
           unzip tiff-4.7.0.zip
           cd tiff-4.7.0
@@ -102,14 +111,6 @@ jobs:
           make install
           cd ..          
           
-          echo Build LIBSQLITE3
-          wget -q https://www.sqlite.org/2025/sqlite-src-3500000.zip
-          unzip -q sqlite-src-3500000.zip
-          cd sqlite-src-3500000
-          ./configure --prefix=${BUILD}
-          make install
-          cd ..
-
 
           
           echo Build LIBSPATIALITE
