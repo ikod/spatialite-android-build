@@ -61,7 +61,7 @@ jobs:
           cd proj-9.5.1
           mkdir build
           cd build
-          cmake -DEXE_SQLITE3=/usr/bin/sqlite3 -DCMAKE_C_COMPILER=${CC} -DENABLE_CURL=off -DBUILD_PROJSYNC=off -DBUILD_TESTING=off -DBUILD_SHARED_LIBS=off -DBUILD_APPS=off  -DCMAKE_INSTALL_PREFIX=${BUILD} ..
+          cmake -DEXE_SQLITE3=/usr/bin/sqlite3 -DCMAKE_C_COMPILER="${CC}" -DENABLE_CURL=off -DBUILD_PROJSYNC=off -DBUILD_TESTING=off -DBUILD_SHARED_LIBS=off -DBUILD_APPS=off  -DCMAKE_INSTALL_PREFIX=${BUILD} ..
           cmake --build . --target=install
           cd ../../
 
