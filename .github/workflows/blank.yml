@@ -3,13 +3,14 @@
 name: spatialite android build
 
 # Controls when the workflow will run
-on: workflow_dispatch
-  inputs:
-    name: target
-    type: choice
-    options:
-    - x86_64-linux-android
-    - arm64-v8a
+on:
+  workflow_dispatch:
+    inputs:
+      target:
+        type: choice
+        options:
+        - x86_64-linux-android
+        - arm64-v8a
   # push:
   #   branches:
   #     - main
