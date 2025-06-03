@@ -46,6 +46,7 @@ jobs:
 
           export CFLAGS="${CFLAGS} -I${BUILD}/include/"
           export LDFLAGS="${LDFLAGS} -L${BUILD}/lib/ -lm"
+          export CXXFLAGS="${CXXFLAGS} -I${BUILD}/include/"
           sudo apt install -y autotools-dev autoconf libtool
 
           echo Build LIBSQLITE3
@@ -65,13 +66,15 @@ jobs:
           make install
           cd ..
 
-          wget -q https://download.osgeo.org/proj/proj-9.5.1.tar.gz
-          tar xzf proj-9.5.1.tar.gz
-          cd proj-9.5.1
-          mkdir build
-          cd build
-          cmake -DEXE_SQLITE3=/usr/bin/sqlite3 -DCMAKE_C_COMPILER=${TOOLCHAIN}/bin/clang -DENABLE_CURL=off -DBUILD_PROJSYNC=off -DBUILD_TESTING=off -DBUILD_SHARED_LIBS=off -DBUILD_APPS=off  -DCMAKE_INSTALL_PREFIX=${BUILD} ..
-          cmake --build . --target=install
+          wget -q https://download.osgeo.org/proj/proj-5.0.0.tar.gz
+          tar xzf proj-5.0.0.tar.gz
+          cd proj-5.0.0
+          ./configure --host=x86_64 --prefix=${BUILD} --with-sysroot=${NDK}/toolchains/llvm/prebuilt/linux-x86_64/sysroot --without-mutex
+          make install
+          #mkdir build
+          #cd build
+          #cmake -DEXE_SQLITE3=/usr/bin/sqlite3 -DCMAKE_C_COMPILER=${TOOLCHAIN}/bin/clang -DENABLE_CURL=off -DBUILD_PROJSYNC=off -DBUILD_TESTING=off -DBUILD_SHARED_LIBS=off -DBUILD_APPS=off  -DCMAKE_INSTALL_PREFIX=${BUILD} ..
+          #cmake --build . --target=install
           cd ../../
 
           
@@ -118,6 +121,7 @@ jobs:
           export SQLITE3_LIBS="-L${BUILD}/lib"
           export LIBXML2_CFLAGS="-I${BUILD}/include/libxml2"
           export LIBXML2_LIBS="-L${BUILD}/lib"
+          export LDFLAGS="${LDFLAGS} -lproj"
           wget -q https://www.gaia-gis.it/gaia-sins/libspatialite-sources/libspatialite-5.1.0.tar.gz
           tar xzf libspatialite-5.1.0.tar.gz
           cd libspatialite-5.1.0
