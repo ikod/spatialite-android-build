@@ -61,15 +61,15 @@ jobs:
           wget -q  https://download.osgeo.org/libtiff/tiff-4.7.0.zip
           unzip tiff-4.7.0.zip
           cd tiff-4.7.0
-          ./autogen.sh --host=x86_64-linux
-          ./configure --host=x86_64 --prefix=${BUILD} --with-sysroot=${NDK}/toolchains/llvm/prebuilt/linux-x86_64/sysroot
+          ./autogen.sh --host=${TARGET
+          ./configure --host=${TARGET} --prefix=${BUILD} --with-sysroot=${NDK}/toolchains/llvm/prebuilt/linux-x86_64/sysroot
           make install
           cd ..
 
           wget -q https://download.osgeo.org/proj/proj-5.0.0.tar.gz
           tar xzf proj-5.0.0.tar.gz
           cd proj-5.0.0
-          ./configure --host=x86_64 --prefix=${BUILD} --with-sysroot=${NDK}/toolchains/llvm/prebuilt/linux-x86_64/sysroot --without-mutex
+          ./configure --host=${TARGET} --prefix=${BUILD} --with-sysroot=${NDK}/toolchains/llvm/prebuilt/linux-x86_64/sysroot --without-mutex
           make install
           #mkdir build
           cd ../
@@ -79,7 +79,7 @@ jobs:
           wget -q https://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.18.tar.gz
           tar xzf libiconv-1.18.tar.gz
           cd libiconv-1.18
-          ./configure --host=x86_64 --prefix=${BUILD} --with-sysroot=${NDK}/toolchains/llvm/prebuilt/linux-x86_64/sysroot
+          ./configure --host=${TARGET} --prefix=${BUILD} --with-sysroot=${NDK}/toolchains/llvm/prebuilt/linux-x86_64/sysroot
           make install
           cd ..
 
@@ -88,9 +88,9 @@ jobs:
           tar xzf libxml2-v2.14.3.tar.gz
           cd libxml2-v2.14.3
           echo == autogen.sh ==
-          ./autogen.sh  --host=x86_64
+          ./autogen.sh  --host=${TARGET
           echo == configure ==
-          ./configure --host=x86_64 --prefix=${BUILD} --without-python --with-http --with-sysroot=${NDK}/toolchains/llvm/prebuilt/linux-x86_64/sysroot
+          ./configure --host=${TARGET} --prefix=${BUILD} --without-python --with-http --with-sysroot=${NDK}/toolchains/llvm/prebuilt/linux-x86_64/sysroot
           make install
           cd ..
 
@@ -107,7 +107,7 @@ jobs:
           tar xzf librttopo-1.1.0.tar.gz
           cd librttopo-librttopo-1.1.0
           ./autogen.sh
-          ./configure --host=x86_64 --with-geosconfig=${BUILD}/bin/geos-config --prefix=${BUILD}
+          ./configure --host=${TARGET} --with-geosconfig=${BUILD}/bin/geos-config --prefix=${BUILD}
           make install
           cd ..          
           
@@ -122,7 +122,9 @@ jobs:
           wget -q https://www.gaia-gis.it/gaia-sins/libspatialite-sources/libspatialite-5.1.0.tar.gz
           tar xzf libspatialite-5.1.0.tar.gz
           cd libspatialite-5.1.0
-          ./configure --prefix=${BUILD} --enable-freexl=no --enable-minizip=no --enable-module-only --enable-examples=no --host=x86_64 --with-geosconfig=${BUILD}/bin/geos-config --with-sysroot=${NDK}/toolchains/llvm/prebuilt/linux-x86_64/sysroot 
+          ./configure --prefix=${BUILD} --enable-freexl=no --enable-minizip=no --enable-module-only --enable-examples=no \
+          --build=x86_64-unknown-linux-gnu --host=x86_64-android-linux --with-geosconfig=${BUILD}/bin/geos-config \
+          --with-sysroot=${NDK}/toolchains/llvm/prebuilt/linux-x86_64/sysroot 
           make install
           ls ${BUILD}/lib
 
