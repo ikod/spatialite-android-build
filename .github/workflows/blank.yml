@@ -61,7 +61,7 @@ jobs:
           wget -q  https://download.osgeo.org/libtiff/tiff-4.7.0.zip
           unzip tiff-4.7.0.zip
           cd tiff-4.7.0
-          ./autogen.sh --host=${TARGET
+          ./autogen.sh --host=${TARGET}
           ./configure --host=${TARGET} --prefix=${BUILD} --with-sysroot=${NDK}/toolchains/llvm/prebuilt/linux-x86_64/sysroot
           make install
           cd ..
