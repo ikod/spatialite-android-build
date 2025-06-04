@@ -125,6 +125,7 @@ jobs:
           ./configure --prefix=${BUILD} --enable-freexl=no --enable-minizip=no --enable-module-only --enable-examples=no \
           --build=x86_64-unknown-linux-gnu --host=x86_64-android-linux --with-geosconfig=${BUILD}/bin/geos-config \
           --with-sysroot=${NDK}/toolchains/llvm/prebuilt/linux-x86_64/sysroot 
+          sed -i 's/-lpthread//g' src/Makefile
           make install
           ls ${BUILD}/lib
 
