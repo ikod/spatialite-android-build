@@ -88,7 +88,7 @@ jobs:
           tar xzf libxml2-v2.14.3.tar.gz
           cd libxml2-v2.14.3
           echo == autogen.sh ==
-          ./autogen.sh  --host=${TARGET
+          ./autogen.sh  --host=${TARGET}
           echo == configure ==
           ./configure --host=${TARGET} --prefix=${BUILD} --without-python --with-http --with-sysroot=${NDK}/toolchains/llvm/prebuilt/linux-x86_64/sysroot
           make install
