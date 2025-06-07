@@ -97,8 +97,9 @@ jobs:
           echo == Build GEOS ==
           wget -q https://download.osgeo.org/geos/geos-3.13.1.tar.bz2
           bzip2 -d < geos-3.13.1.tar.bz2 | tar xf -
+          patch geos-3.13.1/CMakeLists.txt < geos-CMakeLists.txt.patch
           cd geos-3.13.1
-          ./configure --prefix=${BUILD}
+          cmake -DCMAKE_INSTALL_PREFIX=${BUILD} -DBUILD_SHARED_LIBS=ON -DBUILD_TESTING=OFF .
           make install
           cd ..
 
