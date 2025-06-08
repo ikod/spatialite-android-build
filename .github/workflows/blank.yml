@@ -143,5 +143,5 @@ jobs:
       - name: publish
         uses: actions/upload-artifact@v4
         with:
-          path: /home/runner/build-x86_64-linux-android/lib/
+          path: /home/runner/build-x86_64-linux-android/lib/*
           name: mod_spatialite_android
