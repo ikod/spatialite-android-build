@@ -142,7 +142,7 @@ jobs:
           rm -rf ${BUILD}/lib/*a ${BUILD}/lib/pkgconfig ${BUILD}/lib/cmake ${BUILD}/lib/*.so.[0-9]* ${BUILD}/lib/libsqlite3.*
           ls ${BUILD}/lib
           pushd ${BUILD}/lib
-          zip ~/mod_spatialite_${TARGET}.zip *
+          zip ${GITHUB_WORKSPACE}/mod_spatialite_${TARGET}.zip *
           popd
           git config user.name buildbot
           git config user.email buildbot@github.io
