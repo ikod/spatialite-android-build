@@ -2,6 +2,9 @@
 
 name: spatialite android build
 
+env:
+  NDK_VERSION: r28
+  API: 28
 # Controls when the workflow will run
 on:
   workflow_dispatch:
@@ -28,16 +31,16 @@ jobs:
         name: setup NDK
         id: setup-ndk
         with:
-          ndk-version: r28
+          ndk-version: ${{ env.NDK_VERSION }}
           add-to-path: true
 
       - name: build
         run: |
           export TARGET=${{ github.event.inputs.target }}
           export BUILD="/home/runner/build-${TARGET}"
-          export NDK=/opt/hostedtoolcache/ndk/r28/x64
+          export NDK=/opt/hostedtoolcache/ndk/${{ env.NDK_VERSION }}/x64
           export TOOLCHAIN=${NDK}/toolchains/llvm/prebuilt/linux-x86_64
-          export API=28
+          export API=${{ env.API }}
           export AR=$TOOLCHAIN/bin/llvm-ar
           export CC="$TOOLCHAIN/bin/clang --target=$TARGET$API"
           export AS=$CC
@@ -122,12 +125,13 @@ jobs:
           export SQLITE3_LIBS="-L${BUILD}/lib"
           export LIBXML2_CFLAGS="-I${BUILD}/include/libxml2"
           export LIBXML2_LIBS="-L${BUILD}/lib"
-          export LDFLAGS="${LDFLAGS} -lproj"
+          export LDFLAGS="${LDFLAGS} -lproj -llog"
           wget -q https://www.gaia-gis.it/gaia-sins/libspatialite-sources/libspatialite-5.1.0.tar.gz
           tar xzf libspatialite-5.1.0.tar.gz
           cd libspatialite-5.1.0
           # note --host not x86_64-linux-android but x86_64-android-linux
-          ./configure --prefix=${BUILD} --enable-freexl=no --enable-minizip=no --enable-module-only --enable-examples=no \
+          ./configure --prefix=${BUILD} --enable-freexl=no --enable-minizip=no --enable-module-only \
+          --enable-libxml2=no --enable-iconv=no --enable-examples=no \
           --build=x86_64-unknown-linux-gnu --host=x86_64-android-linux --with-geosconfig=${BUILD}/bin/geos-config \
           --with-sysroot=${NDK}/toolchains/llvm/prebuilt/linux-x86_64/sysroot --target=android
           make install
@@ -136,5 +140,9 @@ jobs:
       - name: publish
         uses: actions/upload-artifact@v4
         with:
-          path: /home/runner/build-x86_64-linux-android/lib/*
+          path: |
+            /home/runner/build-x86_64-linux-android/lib/libgeos_c.so
+            /home/runner/build-x86_64-linux-android/lib/libproj.so
+            /home/runner/build-x86_64-linux-android/lib/librttopo.so
+            /opt/hostedtoolcache/ndk/${{ env.NDK_VERSION }}/x64/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/${{ github.event.inputs.target }}/${{ env.NDK_VERSION }}/liblog.so
           name: mod_spatialite_android
