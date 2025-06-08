@@ -141,7 +141,8 @@ jobs:
           cp ${NDK}/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/${TARGET}/libc++_shared.so ${BUILD}/lib
           rm -rf ${BUILD}/lib/*a ${BUILD}/lib/pkgconfig ${BUILD}/lib/cmake ${BUILD}/lib/*.so.[0-9]* ${BUILD}/lib/libsqlite3.*
           ls ${BUILD}/lib
-          zip mod_spatialite_${TARGET}.zip ./build-${TARGET}/lib/*
+          cd ${BUILD}/lib
+          zip ~/mod_spatialite_${TARGET}.zip *
           git config user.name buildbot
           git config user.email buildbot@github.io
           git add mod_spatialite_${TARGET}.zip
