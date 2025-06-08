@@ -63,13 +63,13 @@ jobs:
           cd ..
 
 
-          wget -q  https://download.osgeo.org/libtiff/tiff-4.7.0.zip
-          unzip tiff-4.7.0.zip
-          cd tiff-4.7.0
-          ./autogen.sh --host=${TARGET}
-          ./configure --host=${TARGET} --prefix=${BUILD} --with-sysroot=${NDK}/toolchains/llvm/prebuilt/linux-x86_64/sysroot
-          make install
-          cd ..
+          # wget -q  https://download.osgeo.org/libtiff/tiff-4.7.0.zip
+          # unzip tiff-4.7.0.zip
+          # cd tiff-4.7.0
+          # ./autogen.sh --host=${TARGET}
+          # ./configure --host=${TARGET} --prefix=${BUILD} --with-sysroot=${NDK}/toolchains/llvm/prebuilt/linux-x86_64/sysroot
+          # make install
+          # cd ..
 
           wget -q https://download.osgeo.org/proj/proj-5.0.0.tar.gz
           tar xzf proj-5.0.0.tar.gz
@@ -80,24 +80,24 @@ jobs:
           cd ../
 
           
-          echo == BUILD LIBICONV ==
-          wget -q https://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.18.tar.gz
-          tar xzf libiconv-1.18.tar.gz
-          cd libiconv-1.18
-          ./configure --host=${TARGET} --prefix=${BUILD} --with-sysroot=${NDK}/toolchains/llvm/prebuilt/linux-x86_64/sysroot
-          make install
-          cd ..
+          # echo == BUILD LIBICONV ==
+          # wget -q https://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.18.tar.gz
+          # tar xzf libiconv-1.18.tar.gz
+          # cd libiconv-1.18
+          # ./configure --host=${TARGET} --prefix=${BUILD} --with-sysroot=${NDK}/toolchains/llvm/prebuilt/linux-x86_64/sysroot
+          # make install
+          # cd ..
 
-          echo == BUILD LIBXML2 ==
-          wget -q https://gitlab.gnome.org/GNOME/libxml2/-/archive/v2.14.3/libxml2-v2.14.3.tar.gz
-          tar xzf libxml2-v2.14.3.tar.gz
-          cd libxml2-v2.14.3
-          echo == autogen.sh ==
-          ./autogen.sh  --host=${TARGET}
-          echo == configure ==
-          ./configure --host=${TARGET} --prefix=${BUILD} --without-python --with-http --with-sysroot=${NDK}/toolchains/llvm/prebuilt/linux-x86_64/sysroot
-          make install
-          cd ..
+          # echo == BUILD LIBXML2 ==
+          # wget -q https://gitlab.gnome.org/GNOME/libxml2/-/archive/v2.14.3/libxml2-v2.14.3.tar.gz
+          # tar xzf libxml2-v2.14.3.tar.gz
+          # cd libxml2-v2.14.3
+          # echo == autogen.sh ==
+          # ./autogen.sh  --host=${TARGET}
+          # echo == configure ==
+          # ./configure --host=${TARGET} --prefix=${BUILD} --without-python --with-http --with-sysroot=${NDK}/toolchains/llvm/prebuilt/linux-x86_64/sysroot
+          # make install
+          # cd ..
 
           echo == Build GEOS ==
           wget -q https://download.osgeo.org/geos/geos-3.13.1.tar.bz2
