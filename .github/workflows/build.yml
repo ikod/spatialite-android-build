@@ -60,6 +60,8 @@ jobs:
           cd sqlite-src-3500000
           ./configure --prefix=${BUILD}
           make install
+          ${CC} -I./ -g -fPIC -shared ./ext/misc/spellfix.c -o spellfix1.so
+          mv spellfix1.so ${BUILD}/lib
           cd ..
 
 
